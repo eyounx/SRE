@@ -1,0 +1,72 @@
+Sequential Random Embeddings (SRE) Framework is a derivative-free optimization framework used to solve high-dimensional non-convex functions. SRE-framework is not an optimization algorithm but a framework which can apply a specific optimization algorithm to solve high-dimensional optimization problems. More detials of SRE-framework can be found in this paper:
+
+Hong Qian, Yi-Qi Hu, and Yang Yu. Derivative-free optimization of high-dimensional nonconvex functions by sequential random embeddings. In Proceedings of the 24th International Joint Conference on Artificial Intelligence (IJCAI’16), New York, NY, 2016.
+
+The structures of SRE-framework java code are showed as follows:
+package Components: the basic class used in SRE-framework
+	Dimension.java: dimension information
+	Instance.java: an sample
+	InstanceComparator.java: compare between instance
+package Methods: the specific optimization methods should be implemented in this package
+	Method.java: an abstract class, optimization method should inherit this class
+	RACOS.java: an example of specific optimization method
+package ObjectiveFunctions: the tasks that will be solved by SRE-framework
+	Eff_Ackley.java: implementation of ackley function
+	Eff_Sphere.java: implementation of sphere function
+	Task.java: an interface of optimization tasks, specific task class should implement this interface 
+package SRE_Framework: SRE-framework is implemented in this package
+	SRE_Opt.java: SRE-framework
+package Test: An example
+	Demo.java: an example of SRE-framework
+package Tools: Some tools are used in SRE-framework can be found in this package
+	EuclideanProjection.java: Euclidean projection
+	FileOperator.java: some file operations
+	Matrix.java: some matrix operations
+	RandomOperator.java: used to random numbers
+
+The necessary .java files are listed as follows:
+	Dimension.java 
+	Instance.java
+	InstanceComparator.java
+	Method.java
+	Task.java
+	SRE_Opt.java
+	EuclideanProjection.java
+	FileOperator.java
+	Matrix.java
+	RandomOperator.java
+
+How to use SRE-framework:
+
+	Method.java in package Methods and Task.java in package ObjectiveFunctions are very important files in SRE-framework. Method is an abstract class. The specific optimization method which will be applied in SRE-framework should inherit this class and override function Optimization. This function implement optimization method and return the best solution found by this method. RACOS.java is an example of this class. The detials of function Optimization are as follows:
+
+	public abstract Instance Optimization(Dimension sub_dim, Dimension ori_dim, Task t, double[][] proj_matrix, double[] bias)
+		sub_dim: dimension of low-dimensional space
+		ori_dim: dimension of original space
+		t: optimization task
+		proj_matrix: projection matirx
+		bias: an instance
+
+	Task.java is an interface of optimization tasks. The optimization tasks solved by SRE-framework shoud implement this interface. There are two functions should be implemented in this interface: getValue(double[]) and getDim(). Function getValue returns objective function value corresponding to the input instance. Function getDim returns class Dimension which contain the dimension information according to optimization problem shound be solved. The detials of those two functions are as follows:
+
+	public abstract double getValue(double[] x)
+		x: the input instance features
+
+	public abstract Dimension getDim()
+
+	The steps of using SRE-framework are as follows:
+	1. implement a method class which inherits class Method and override function Optimization
+	2. implement a task class which implements interface Task. 
+	3. new optimization method class and set the parameters of this method
+	4. new SRE_Opt class and call function setParametersto set the parameters of SRE. The parameters of SRE are as follows:
+		setParameters(Task t, Method met, int sub, Dimension ori, double var, int step, double[][] reg)
+			t: task class which implements interface Task
+			met: optimization method which inherits class Method
+			sub: low-dimension size
+			ori: class Dimension of original dimension information
+			var: variance of Gaussian distribution
+			reg: region in low-dimension space
+	5. call SRE_Opt.SRE_Optimization to optimize
+	6. call SRE_Opt.getOptimal to get best solution. Function returns an class Instanc, user can get feature values by call Instanc.getFeature and get objective value by call Instance.getValue.
+
+	More details can by found in Demo.java
