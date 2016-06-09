@@ -5,4 +5,4 @@ Sequential Random Embedding for High-Dimensional Derivative-Free Optimization. M
 The codes are released under the GNU GPL 2.0 license. For commercial purposes, please contact Dr. Yang Yu (yuy@nju.edu.cn) or Prof. Zhi-Hua Zhou (zhouzh@nju.edu.cn)
 
 
-The code include a version of RACOS as the optimizer. For the latest version of RACOS, please find at https://github.com/eyounx/RACOS
+The codes include a version of RACOS as the optimizer. For the latest version of RACOS, please find at https://github.com/eyounx/RACOS
